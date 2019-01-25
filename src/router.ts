@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import firebase from 'firebase';
+
 import Home from './views/Home.vue';
+import User from './views/User.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -21,5 +24,23 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
+    {
+      path: '/user',
+      name: 'user',
+      component: User,
+      meta: {
+        requiresAuth: true,
+      }
+    }
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) next('home');
+  next();
+})
+
+export default router;
