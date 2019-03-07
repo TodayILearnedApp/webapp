@@ -25,8 +25,7 @@ import { config } from "../domains/knowledges/config";
   },
   methods: {
     addKnowledge: async function() {
-      const { title } = this.$data.form;
-      console.log("this", title);
+      const { title, description } = this.$data.form;
 
       const currentUser = firebase.auth().currentUser;
       const uid = currentUser.uid;
@@ -37,6 +36,7 @@ import { config } from "../domains/knowledges/config";
 
       await collection.add({
         title,
+        description,
         author: currentUser.uid
       });
 
