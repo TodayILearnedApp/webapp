@@ -47,6 +47,24 @@ import KnowledgeForm from "@/components/KnowledgeForm";
         .collection(config.collection_endpoint)
         .where("author", "==", currentUser.uid);
 
+      firebase
+        .firestore()
+        .collection(config.collection_endpoint)
+        .where("author", "==", currentUser.uid)
+        .onSnapshot(convo => {
+          let source = convo.metadata.hasPendingWrites ? "Local" : "Server";
+          const knowledges = [];
+
+          convo.docs.forEach(doc => {
+            knowledges.push({
+              [doc.id]: doc.data()
+            });
+          });
+
+          this.knowledges = knowledges;
+          // TODO: add messages to store
+        });
+
       const snapshot = await collection.get();
 
       // const knowledges: Array<{ [id: string]: Knowledge }> = [];
@@ -57,8 +75,6 @@ import KnowledgeForm from "@/components/KnowledgeForm";
           [doc.id]: doc.data()
         });
       });
-
-      console.log("know", knowledges);
 
       this.knowledges = knowledges;
     }
