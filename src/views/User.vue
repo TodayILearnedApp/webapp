@@ -8,6 +8,8 @@
     </ul>
 
     <KnowledgeForm/>
+
+    <h2>My latest knowledges</h2>
   </div>
 </template>
 
