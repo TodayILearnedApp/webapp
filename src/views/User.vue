@@ -10,6 +10,9 @@
     <KnowledgeForm/>
 
     <h2>My latest knowledges</h2>
+    <ul>
+      <li :key="item.key" v-for="item in latestKnowledges">{{item}}</li>
+    </ul>
   </div>
 </template>
 
@@ -30,7 +33,8 @@ import KnowledgeForm from "@/components/KnowledgeForm";
 
     return {
       displayName: user ? user.displayName : null,
-      knowledges: []
+      knowledges: [],
+      latestKnowledges: [],
     };
   },
   mounted() {
@@ -48,6 +52,26 @@ import KnowledgeForm from "@/components/KnowledgeForm";
         .firestore()
         .collection(config.collection_endpoint)
         .where("author", "==", currentUser.uid);
+
+      // get three latest knowledges
+      firebase
+        .firestore()
+        .collection(config.collection_endpoint)
+        .where("author", "==", currentUser.uid)
+        .orderBy("date", "desc")
+        .limit(3)
+        .onSnapshot(convo => {
+          let source = convo.metadata.hasPendingWrites ? "Local" : "Server";
+          const knowledges = [];
+
+          convo.docs.forEach(doc => {
+            knowledges.push({
+              [doc.id]: doc.data()
+            });
+          });
+
+          this.latestKnowledges = knowledges;
+        });
 
       firebase
         .firestore()
