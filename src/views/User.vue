@@ -10,9 +10,14 @@
     <KnowledgeForm/>
 
     <h2>My latest knowledges</h2>
-    <ul>
-      <li :key="item.key" v-for="item in latestKnowledges">{{item}}</li>
-    </ul>
+    <div class="vertical-knowledges-container">
+      <VerticalKnowledge
+        :date="item.date"
+        :title="item.title"
+        :key="item.key"
+        v-for="item in latestKnowledges"
+      />
+    </div>
 
     <h2>My knowledges</h2>
     <div class="timeline">
@@ -38,9 +43,11 @@ import { Component, Vue } from "vue-property-decorator";
 import { Knowledge } from "../domains/knowledges/model";
 import { config } from "../domains/knowledges/config";
 import KnowledgeForm from "@/components/KnowledgeForm";
+import VerticalKnowledge from "@/components/VerticalKnowledge";
 
 @Component({
   components: {
+    VerticalKnowledge,
     KnowledgeForm
   },
   data() {
@@ -80,9 +87,7 @@ import KnowledgeForm from "@/components/KnowledgeForm";
           const knowledges = [];
 
           convo.docs.forEach(doc => {
-            knowledges.push({
-              [doc.id]: doc.data()
-            });
+            knowledges.push(doc.data());
           });
 
           this.latestKnowledges = knowledges;
@@ -116,6 +121,12 @@ export default class User extends Vue {}
 
 
 <style scoped lang="scss">
+.vertical-knowledges-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
 .timeline {
   margin: 0 auto;
   max-width: 1024px;
