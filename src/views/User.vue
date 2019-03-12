@@ -17,11 +17,13 @@
     <h2>My knowledges</h2>
     <div class="timeline">
       <div class="knowledge" :key="item.key" v-for="item in knowledges">
-        <div class="marker"/>
+        <div class="marker-container">
+          <div class="marker"/>
+        </div>
         <div class="date">{{ item.date | humanDate}}</div>
         <div class="content">
           <div class="title">{{item.title}}</div>
-          <div class="title">{{item.description}}</div>
+          <div class="description">{{item.description}}</div>
         </div>
       </div>
     </div>
@@ -103,17 +105,6 @@ import KnowledgeForm from "@/components/KnowledgeForm";
           this.knowledges = knowledges;
           // TODO: add messages to store
         });
-
-      const snapshot = await collection.get();
-
-      // const knowledges: Array<{ [id: string]: Knowledge }> = [];
-      const knowledges = [];
-
-      snapshot.forEach(doc => {
-        knowledges.push(doc.data());
-      });
-
-      this.knowledges = knowledges;
     }
   },
   filters: {
@@ -126,6 +117,9 @@ export default class User extends Vue {}
 
 <style scoped lang="scss">
 .timeline {
+  margin: 0 auto;
+  max-width: 1024px;
+
   display: flex;
   flex-direction: column;
 
@@ -133,7 +127,7 @@ export default class User extends Vue {}
     position: fixed;
     top: 0;
     height: 100%;
-    padding-right: 0.5em;
+    padding-right: 11px;
     border-right: 2px solid #f2f2f2;
     content: "";
   }
@@ -143,24 +137,40 @@ export default class User extends Vue {}
     align-items: stretch;
     margin-top: 2em;
 
+    .marker-container {
+      padding-right: 62px;
+    }
     .marker {
       position: relative;
       display: table-cell;
-      height: 1em;
-      min-height: 1em;
-      width: 1em;
-      min-width: 1em;
-      border: 4px solid red;
+
+      // size
+      height: 24px;
+      min-height: 24px;
+      width: 24px;
+      min-width: 24px;
+
+      // border
+      border: 2px solid #ff1744;
       border-radius: 50%;
+
       background-color: white;
       z-index: 0;
+
+      box-sizing: border-box;
     }
 
     .date {
-      padding-left: 1em;
+      padding-right: 126px;
     }
     .content {
-      padding-left: 1em;
+      .title {
+        font-size: 0.9em;
+      }
+      .description {
+        font-size: 0.7em;
+        color: #808080;
+      }
     }
   }
 }
