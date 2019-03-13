@@ -38,13 +38,23 @@ export default class VerticalKnowledge extends Vue {
 
 <style scoped lang="scss">
 .container {
+  background-color: #fff;
   width: 256px;
   height: 400px;
 
   margin: 16px;
 
   box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.4);
+  transition: all 0.3s ease-in-out;
+
   border-radius: 5px;
+
+  &:hover {
+    box-shadow: 0 1px #ffffff inset, 0 3px 5px rgba(34, 25, 25, 0.4);
+    cursor: pointer;
+    background-color: #06bcfb;
+    background-image: linear-gradient(315deg, #06bcfb 0%, #4884ee 74%);
+  }
 
   display: flex;
   flex-direction: column;
