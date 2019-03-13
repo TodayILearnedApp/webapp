@@ -14,24 +14,25 @@
       <VerticalKnowledge
         :date="item.date"
         :title="item.title"
+        :description="item.description"
         :key="item.key"
         v-for="item in latestKnowledges"
       />
     </div>
 
     <h2>My knowledges</h2>
-    <div class="timeline">
-      <div class="knowledge" :key="item.key" v-for="item in knowledges">
-        <div class="marker-container">
-          <div class="marker"/>
-        </div>
-        <div class="date">{{ item.date | humanDate}}</div>
-        <div class="content">
-          <div class="title">{{item.title}}</div>
-          <div class="description">{{item.description}}</div>
-        </div>
-      </div>
-    </div>
+    <!--<div class="timeline">-->
+    <!--  <div class="knowledge" :key="item.key" v-for="item in knowledges">-->
+    <!--    <div class="marker-container">-->
+    <!--      <div class="marker"/>-->
+    <!--    </div>-->
+    <!--    <div class="date">{{ item.date | humanDate}}</div>-->
+    <!--    <div class="content">-->
+    <!--      <div class="title">{{item.title}}</div>-->
+    <!--      <div class="description">{{item.description}}</div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
   </div>
 </template>
 
