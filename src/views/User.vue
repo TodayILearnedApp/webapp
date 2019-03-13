@@ -1,15 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    bonjour mr {{displayName}}
-    <button @click="logout">sign out</button>
-    <ul>
-      <li :key="item.key" v-for="item in knowledges">{{item}}</li>
-    </ul>
-
     <KnowledgeForm/>
 
-    <h2>My latest knowledges</h2>
+    <h2>Latest knowledges</h2>
     <div class="vertical-knowledges-container">
       <VerticalKnowledge
         :date="item.date"
@@ -20,7 +13,7 @@
       />
     </div>
 
-    <h2>My knowledges</h2>
+    <h2>All knowledges</h2>
     <!--<div class="timeline">-->
     <!--  <div class="knowledge" :key="item.key" v-for="item in knowledges">-->
     <!--    <div class="marker-container">-->
@@ -64,10 +57,6 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
     this.getKnowledges();
   },
   methods: {
-    logout: function() {
-      firebase.auth().signOut();
-      this.$router.replace("home");
-    },
     async getKnowledges() {
       const currentUser = firebase.auth().currentUser;
 
