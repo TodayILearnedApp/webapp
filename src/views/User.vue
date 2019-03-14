@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <KnowledgeForm/>
+    <div class="form-container">
+      <KnowledgeForm/>
+    </div>
 
     <h2>Latest knowledges</h2>
     <div class="vertical-knowledges-container">
@@ -115,6 +117,11 @@ export default class User extends Vue {}
   width: 100%;
   display: flex;
   flex-direction: row;
+}
+
+.form-container  {
+  margin-left: 64px;
+  background: red;
 }
 
 .timeline {

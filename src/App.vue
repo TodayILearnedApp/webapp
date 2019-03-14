@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <HorizontalNav/>
-    <router-view/>
+    <div class="view-container">
+      <HorizontalNav/>
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -45,5 +47,10 @@ h4,
 h5,
 h6 {
   font-family: "Roboto Slab", serif;
+}
+
+.view-container {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 </style>
