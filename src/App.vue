@@ -40,6 +40,10 @@ body {
   margin: 0;
 }
 
+textarea {
+  font-family: "Raleway", sans-serif;
+}
+
 h1,
 h2,
 h3,
