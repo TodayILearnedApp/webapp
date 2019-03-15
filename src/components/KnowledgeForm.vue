@@ -30,7 +30,7 @@
       placeholder="What about 'word' or 'it' or 'general' ?"
       v-model="tag"
       :tags="form.tags"
-      @tags-changed="newTags => tags = newTags"
+      @tags-changed="newTags => form.tags = newTags"
     />
     <button class="submit-button" @click="addKnowledge">Add new knowledge</button>
   </div>
@@ -64,7 +64,7 @@ import { config } from "../domains/knowledges/config";
   },
   methods: {
     addKnowledge: async function() {
-      const { title, description, date } = this.$data.form;
+      const { title, description, date, tags } = this.$data.form;
 
       const currentUser = firebase.auth().currentUser;
       const uid = currentUser.uid;
@@ -77,7 +77,8 @@ import { config } from "../domains/knowledges/config";
         title,
         description,
         date: moment(date).format("YYYY-MM-DD"),
-        author: currentUser.uid
+        author: currentUser.uid,
+        tags: tags.map(i => i.text)
       });
 
       this.$data.form = {
