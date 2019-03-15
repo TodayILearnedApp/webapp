@@ -9,7 +9,9 @@
     <div class="separator"/>
     <div class="content">
       <div class="title">{{title}}</div>
-      <div class="description">{{description}}</div>
+      <div class="description">
+        <span v-html="description"/>
+      </div>
     </div>
     <div class="date">
       <div>{{date | dateDisplay}}</div>

@@ -7,19 +7,21 @@
       placeholder="What did you learn ?"
       v-focus
     >
-    <textarea
+    <VueEditor
       v-model="form.description"
-      class="input"
-      type="text"
       placeholder="Let's write a quick definition / explanation"
-      rows="5"
+      :editorToolbar="[
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['code-block']
+      ]"
     />
     <label class="label" for="date">
       When ? Default is
       <i>today</i>
     </label>
     <datepicker
-      :value="form.date"
+      v-model="form.date"
       name="date"
       input-class="input"
       placeholder="Date"
@@ -42,6 +44,7 @@ import moment from "moment";
 import { Component, Vue } from "vue-property-decorator";
 import Datepicker from "vuejs-datepicker";
 import VueTagsInput from "@johmun/vue-tags-input";
+import { VueEditor } from "vue2-editor";
 
 import { Knowledge } from "../domains/knowledges/model";
 import { config } from "../domains/knowledges/config";
@@ -49,7 +52,8 @@ import { config } from "../domains/knowledges/config";
 @Component({
   components: {
     Datepicker,
-    VueTagsInput
+    VueTagsInput,
+    VueEditor
   },
   data() {
     return {
@@ -104,6 +108,19 @@ export default class KnowledgeForm extends Vue {}
 </script>
 
 <style lang="scss">
+.quillWrapper {
+  margin-top: 16px;
+  box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.3);
+  .ql-container.ql-snow {
+    border: none !important;
+  }
+  .ql-toolbar.ql-snow {
+    border-right: none;
+    border-left: none;
+    border-top: none;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;

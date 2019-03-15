@@ -21,18 +21,21 @@
     </div>
 
     <h2>All knowledges</h2>
-    <!--<div class="timeline">-->
-    <!--  <div class="knowledge" :key="item.key" v-for="item in knowledges">-->
-    <!--    <div class="marker-container">-->
-    <!--      <div class="marker"/>-->
-    <!--    </div>-->
-    <!--    <div class="date">{{ item.date | humanDate}}</div>-->
-    <!--    <div class="content">-->
-    <!--      <div class="title">{{item.title}}</div>-->
-    <!--      <div class="description">{{item.description}}</div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--</div>-->
+    <div class="timeline">
+      <div class="knowledge" :key="item.key" v-for="item in knowledges">
+        <div class="marker-container">
+          <div class="marker"/>
+        </div>
+        <div class="date">{{ item.date | humanDate}}</div>
+        <div class="content">
+          <div class="title">{{item.title}}</div>
+          <div class="description">{{item.description}}</div>
+          <div v-if="Array.isArray(item.tags)" class="tags">
+            <div :key="tag" class="tag" v-for="tag in item.tags">#{{tag}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -141,6 +144,7 @@ export default class User extends Vue {}
 }
 
 .timeline {
+  position: relative;
   margin: 0 auto;
   max-width: 1024px;
 
@@ -148,7 +152,7 @@ export default class User extends Vue {}
   flex-direction: column;
 
   &:before {
-    position: fixed;
+    position: absolute;
     top: 0;
     height: 100%;
     padding-right: 11px;
@@ -194,6 +198,22 @@ export default class User extends Vue {}
       .description {
         font-size: 0.7em;
         color: #808080;
+      }
+    }
+    .tags {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: row;
+      .tag:not(:first-child) {
+        margin-left: 1rem;
+      }
+
+      .tag {
+        &:hover {
+          color: #3d5afe;
+          cursor: pointer;
+          font-weight: bold;
+        }
       }
     }
   }
