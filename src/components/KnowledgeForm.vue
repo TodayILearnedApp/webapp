@@ -76,15 +76,18 @@ import { config } from "../domains/knowledges/config";
       await collection.add({
         title,
         description,
-        date,
+        date: moment(date).format("YYYY-MM-DD"),
         author: currentUser.uid
       });
 
       this.$data.form = {
         title: "",
         description: "",
-        date: moment().format("YYYY-MM-DD")
+        date: new Date(),
+        tags: []
       };
+
+      this.$router.push({ name: "user" });
     }
   },
   directives: {

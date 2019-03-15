@@ -130,6 +130,7 @@ export default class User extends Vue {}
   justify-content: center;
 
   input {
+    cursor: pointer;
     &:disabled {
       background-color: #fff;
     }
