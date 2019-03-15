@@ -1,6 +1,12 @@
 <template>
   <div class="form">
-    <input v-model="form.title" class="input" type="text" placeholder="What did you learn ?">
+    <input
+      v-model="form.title"
+      class="input"
+      type="text"
+      placeholder="What did you learn ?"
+      v-focus
+    >
     <textarea
       v-model="form.description"
       class="input"
@@ -79,6 +85,14 @@ import { config } from "../domains/knowledges/config";
         description: "",
         date: moment().format("YYYY-MM-DD")
       };
+    }
+  },
+  directives: {
+    focus: {
+      // directive definition
+      inserted: function(el) {
+        el.focus();
+      }
     }
   }
 })

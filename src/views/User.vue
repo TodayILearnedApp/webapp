@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <div class="form-container">
-      <KnowledgeForm/>
+      <div class="form">
+        <router-link to="/new">
+          <input class="input" type="text" placeholder="What did you learn ?" disabled>
+        </router-link>
+      </div>
     </div>
 
     <h2>Latest knowledges</h2>
@@ -59,6 +63,7 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
     this.getKnowledges();
   },
   methods: {
+    navigateToForm() {},
     async getKnowledges() {
       const currentUser = firebase.auth().currentUser;
 
@@ -119,9 +124,16 @@ export default class User extends Vue {}
   flex-direction: row;
 }
 
-.form-container  {
-  margin-left: 64px;
-  background: red;
+.form-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  input {
+    &:disabled {
+      background-color: #fff;
+    }
+  }
 }
 
 .timeline {
