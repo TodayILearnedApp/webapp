@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="illustration">
+      <div class="remove">
+        <img src="@/assets/remove.svg">
+      </div>
       <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
     </div>
     <div class="separator"/>
@@ -54,6 +57,10 @@ export default class VerticalKnowledge extends Vue {
     cursor: pointer;
     background-color: #06bcfb;
     background-image: linear-gradient(315deg, #06bcfb 0%, #4884ee 74%);
+
+    .remove {
+      display: inherit !important;
+    }
   }
 
   display: flex;
@@ -66,6 +73,8 @@ export default class VerticalKnowledge extends Vue {
   }
 
   .illustration {
+    position: relative;
+
     border-radius: 5px;
 
     flex: 5;
@@ -82,6 +91,23 @@ export default class VerticalKnowledge extends Vue {
       border-radius: 50%;
       width: 128px;
       height: 128px;
+    }
+
+    .remove {
+      display: none;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+
+      transition: transform 0.8s ease-in-out;
+
+      &:hover {
+        transform: rotate(360deg);
+      }
+      img {
+        height: 2rem;
+        width: 2rem;
+      }
     }
   }
 
@@ -113,6 +139,10 @@ export default class VerticalKnowledge extends Vue {
     img {
       height: 2rem;
       width: 2rem;
+      transition: transform 0.8s ease-in-out;
+      &:hover {
+        transform: rotate(360deg);
+      }
     }
   }
 }
