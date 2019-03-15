@@ -58,6 +58,7 @@ export default class VerticalKnowledge extends Vue {
 .container {
   background-color: #fff;
   width: 256px;
+  min-width: 256px;
   height: 400px;
 
   margin: 16px;

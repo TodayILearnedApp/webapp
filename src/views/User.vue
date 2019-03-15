@@ -79,7 +79,7 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
         .collection(config.collection_endpoint)
         .where("author", "==", currentUser.uid)
         .orderBy("date", "desc")
-        .limit(3)
+        .limit(8)
         .onSnapshot(convo => {
           let source = convo.metadata.hasPendingWrites ? "Local" : "Server";
           const knowledges = [];
@@ -123,6 +123,8 @@ export default class User extends Vue {}
   width: 100%;
   display: flex;
   flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .form-container {
