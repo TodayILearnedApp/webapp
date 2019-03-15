@@ -11,6 +11,7 @@
     <h2>Latest knowledges</h2>
     <div class="vertical-knowledges-container">
       <VerticalKnowledge
+        :id="item.id"
         :date="item.date"
         :title="item.title"
         :description="item.description"
@@ -84,7 +85,7 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
           const knowledges = [];
 
           convo.docs.forEach(doc => {
-            knowledges.push(doc.data());
+            knowledges.push({ id: doc.id, ...doc.data() });
           });
 
           this.latestKnowledges = knowledges;
@@ -100,7 +101,7 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
           const knowledges = [];
 
           convo.docs.forEach(doc => {
-            knowledges.push(doc.data());
+            knowledges.push({ id: doc.id, ...doc.data() });
           });
           console.log("know", knowledges);
 

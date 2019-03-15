@@ -2,7 +2,7 @@
   <div class="container">
     <div class="illustration">
       <div class="remove">
-        <img src="@/assets/remove.svg">
+        <img @click="remove" src="@/assets/remove.svg">
       </div>
       <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
     </div>
@@ -21,17 +21,32 @@
 </template>
 
 <script lang="ts">
+import firebase from "firebase";
+import { config } from "../domains/knowledges/config";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import moment from "moment";
 
 @Component({
   components: {},
-  methods: {},
+  methods: {
+    remove: async function() {
+      const userIsSure = window.confirm("Are you sure ?");
+
+      if (!userIsSure) return;
+
+      await firebase
+        .firestore()
+        .collection(config.collection_endpoint)
+        .doc(this.id)
+        .delete();
+    }
+  },
   filters: {
     dateDisplay: date => moment(date).format("YYYY-MM-DD")
   }
 })
 export default class VerticalKnowledge extends Vue {
+  @Prop() private id!: string;
   @Prop() private date!: string;
   @Prop() private title!: string;
   @Prop() private description!: string;
