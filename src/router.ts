@@ -5,6 +5,7 @@ import firebase from "firebase";
 import Home from "./views/Home.vue";
 import User from "./views/User.vue";
 import Form from "./views/Form.vue";
+import Edit from "./views/Edit.vue";
 
 Vue.use(Router);
 
@@ -38,6 +39,14 @@ const router = new Router({
       path: "/new",
       name: "new-knowledge",
       component: Form,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/edit/:id",
+      name: "edit-knowledge",
+      component: Edit,
       meta: {
         requiresAuth: true
       }

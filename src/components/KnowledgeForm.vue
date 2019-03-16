@@ -34,14 +34,16 @@
       :tags="form.tags"
       @tags-changed="newTags => form.tags = newTags"
     />
-    <button class="submit-button" @click="addKnowledge">Add new knowledge</button>
+    <button v-if="mode === 'create'" class="submit-button" @click="addKnowledge">Add new knowledge</button>
+    <button v-if="mode === 'edit'" class="submit-button" @click="editKnowledge">Edit knowledge</button>
   </div>
 </template>
 
 <script lang="ts">
 import firebase from "firebase";
 import moment from "moment";
-import { Component, Vue } from "vue-property-decorator";
+import get from "lodash/get";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import Datepicker from "vuejs-datepicker";
 import VueTagsInput from "@johmun/vue-tags-input";
 import { VueEditor } from "vue2-editor";
@@ -59,14 +61,28 @@ import { config } from "../domains/knowledges/config";
     return {
       tag: "",
       form: {
-        title: "",
-        description: "",
-        date: new Date(),
-        tags: []
+        title: get(this.knowledgeData, "title", ""),
+        description: get(this.knowledgeData, "description", ""),
+        date: get(this.knowledgeData, "date", new Date()),
+        tags: get(this.knowledgeData, "tags", [])
       }
     };
   },
   methods: {
+    editKnowledge: async function() {
+      const { title, description, date, tags } = this.$data.form;
+
+      const newDoc = {
+        title,
+        description,
+        date: moment(date).format("YYYY-MM-DD"),
+        tags: tags.map(i => i.text)
+      };
+
+      await this.save(newDoc);
+
+      this.$router.push({ name: "user" });
+    },
     addKnowledge: async function() {
       const { title, description, date, tags } = this.$data.form;
 
@@ -104,7 +120,11 @@ import { config } from "../domains/knowledges/config";
     }
   }
 })
-export default class KnowledgeForm extends Vue {}
+export default class KnowledgeForm extends Vue {
+  @Prop() private knowledgeData!: object;
+  @Prop() private mode!: string;
+  @Prop() private save!: function;
+}
 </script>
 
 <style lang="scss">
