@@ -12,6 +12,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import firebase from "firebase";
+import "swiper/dist/css/swiper.css";
 
 import HorizontalNav from "@/components/HorizontalNav";
 

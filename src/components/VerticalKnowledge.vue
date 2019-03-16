@@ -1,35 +1,64 @@
 <template>
   <div class="container">
-    <div class="illustration">
-      <div class="remove">
-        <img @click="remove" src="@/assets/remove.svg">
-      </div>
-      <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
-    </div>
-    <div class="separator"/>
-    <div class="content">
-      <div class="title">{{title}}</div>
-      <div class="description">
-        <span v-html="description"/>
-      </div>
-    </div>
-    <div class="date">
-      <div>{{date | dateDisplay}}</div>
-      <div>
-        <img src="@/assets/eye.svg">
-      </div>
-    </div>
+    <swiper ref="mySwiper" :options="swiperOption">
+      <swiper-slide>
+        <div class="card" @click="displayContent">
+          <div class="illustration">
+            <div class="remove">
+              <img @click="remove" src="@/assets/remove.svg">
+            </div>
+            <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
+          </div>
+          <div class="separator"/>
+          <div class="content">
+            <div class="title">{{title}}</div>
+          </div>
+          <div class="date">
+            <div>{{date | dateDisplay}}</div>
+            <div @click="displayContent" class="eye">
+              <img src="@/assets/eye.svg">
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="card">
+          <div class="content">
+            <span v-html="description"/>
+            <div @click="hideContent" class="eye">
+              <img src="@/assets/eye-off.svg">
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script lang="ts">
 import firebase from "firebase";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { config } from "../domains/knowledges/config";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import moment from "moment";
 
 @Component({
-  components: {},
+  components: {
+    swiper,
+    swiperSlide
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
+  data() {
+    return {
+      swiperOption: {
+        direction: "vertical"
+      }
+    };
+  },
   methods: {
     remove: async function() {
       const userIsSure = window.confirm("Are you sure ?");
@@ -41,6 +70,12 @@ import moment from "moment";
         .collection(config.collection_endpoint)
         .doc(this.id)
         .delete();
+    },
+    displayContent: function() {
+      this.swiper.slideTo(1, 500, false);
+    },
+    hideContent: function() {
+      this.swiper.slideTo(0, 1000, false);
     }
   },
   filters: {
@@ -58,17 +93,17 @@ export default class VerticalKnowledge extends Vue {
 
 <style scoped lang="scss">
 .container {
+  position: relative;
   background-color: #fff;
-  width: 256px;
-  min-width: 256px;
-  height: 400px;
 
-  margin: 16px;
+  margin: 50px 0;
 
   box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.4);
   transition: all 0.3s ease-in-out;
 
   border-radius: 5px;
+
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0 1px #ffffff inset, 0 3px 5px rgba(34, 25, 25, 0.4);
@@ -81,8 +116,17 @@ export default class VerticalKnowledge extends Vue {
     }
   }
 
-  display: flex;
-  flex-direction: column;
+  width: 256px;
+  min-width: 256px;
+  height: 400px;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+
+    width: 256px;
+    height: 400px;
+  }
 
   .separator {
     border-radius: 4px;
@@ -153,7 +197,9 @@ export default class VerticalKnowledge extends Vue {
     justify-content: space-between;
     align-content: center;
     align-items: center;
+  }
 
+  .eye {
     img {
       height: 2rem;
       width: 2rem;

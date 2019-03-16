@@ -10,14 +10,46 @@
 
     <h2>Latest knowledges</h2>
     <div class="vertical-knowledges-container">
-      <VerticalKnowledge
-        :id="item.id"
-        :date="item.date"
-        :title="item.title"
-        :description="item.description"
-        :key="item.key"
-        v-for="item in latestKnowledges"
-      />
+      <swiper
+        :options="{
+          freeMode: true,
+          slidesPerView: 4,
+          spaceBetween: 40,
+          pagination: {
+            el: '.swiper-pagination',
+            dynamicBullets: true,
+            clickable: true,
+          },
+          breakpoints: {
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 40
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 30
+            },
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 20
+            },
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 10
+            }
+          }
+        }"
+      >
+        <swiper-slide :key="item.id" v-for="item in latestKnowledges">
+          <VerticalKnowledge
+            :id="item.id"
+            :date="item.date"
+            :title="item.title"
+            :description="item.description"
+          />
+        </swiper-slide>
+        <div class="pagination swiper-pagination" slot="pagination"></div>
+      </swiper>
     </div>
 
     <h2>All knowledges</h2>
@@ -29,7 +61,7 @@
         <div class="date">{{ item.date | humanDate}}</div>
         <div class="content">
           <div class="title">{{item.title}}</div>
-          <div class="description">{{item.description}}</div>
+          <div class="description" v-html="item.description"/>
           <div v-if="Array.isArray(item.tags)" class="tags">
             <div :key="tag" class="tag" v-for="tag in item.tags">#{{tag}}</div>
           </div>
@@ -43,6 +75,7 @@
 import firebase from "firebase";
 import moment from "moment";
 import { Component, Vue } from "vue-property-decorator";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 import { Knowledge } from "../domains/knowledges/model";
 import { config } from "../domains/knowledges/config";
@@ -52,7 +85,9 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
 @Component({
   components: {
     VerticalKnowledge,
-    KnowledgeForm
+    KnowledgeForm,
+    swiper,
+    swiperSlide
   },
   data() {
     const user = firebase.auth().currentUser;
@@ -126,8 +161,10 @@ export default class User extends Vue {}
   width: 100%;
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
+
+  .pagination {
+    margin-top: 2rem;
+  }
 }
 
 .form-container {
