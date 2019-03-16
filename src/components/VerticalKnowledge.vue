@@ -2,11 +2,12 @@
   <div class="container">
     <swiper ref="mySwiper" :options="swiperOption">
       <swiper-slide>
-        <div class="card" @click="displayContent">
+        <div class="card">
           <div class="illustration">
-            <div class="remove">
-              <img @click="remove" src="@/assets/remove.svg">
-            </div>
+            <router-link :to="`/edit/${id}`">
+              <div class="edit"/>
+            </router-link>
+            <div @click="remove" class="remove"/>
             <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
           </div>
           <div class="separator"/>
@@ -15,9 +16,7 @@
           </div>
           <div class="date">
             <div>{{date | dateDisplay}}</div>
-            <div @click="displayContent" class="eye">
-              <img src="@/assets/eye.svg">
-            </div>
+            <div @click="displayContent" class="eye"/>
           </div>
         </div>
       </swiper-slide>
@@ -28,9 +27,7 @@
               <span v-html="description"/>
             </div>
             <div :style="{ display: 'flex', justifyContent: 'flex-end' }">
-              <div @click="hideContent" class="eye">
-                <img src="@/assets/eye-off.svg">
-              </div>
+              <div @click="hideContent" class="eye-off"/>
             </div>
           </div>
         </div>
@@ -100,7 +97,7 @@ export default class VerticalKnowledge extends Vue {
   position: relative;
   background-color: #fff;
 
-  margin: 50px 0;
+  margin: 50px 4px;
 
   box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.4);
   transition: all 0.3s ease-in-out;
@@ -111,10 +108,9 @@ export default class VerticalKnowledge extends Vue {
 
   &:hover {
     box-shadow: 0 1px #ffffff inset, 0 3px 5px rgba(34, 25, 25, 0.4);
-    cursor: pointer;
-    background-color: #06bcfb;
-    background-image: linear-gradient(315deg, #06bcfb 0%, #4884ee 74%);
-
+    background-color: #b8c6db;
+    background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+    .edit,
     .remove {
       display: inherit !important;
     }
@@ -159,20 +155,40 @@ export default class VerticalKnowledge extends Vue {
       height: 128px;
     }
 
+    .edit,
     .remove {
       display: none;
       position: absolute;
-      right: 1rem;
       top: 1rem;
+
+      height: 2rem;
+      width: 2rem;
+    }
+
+    .remove {
+      right: 1rem;
+
+      background-image: url(../assets/remove.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
 
       transition: transform 0.8s ease-in-out;
 
       &:hover {
         transform: rotate(360deg);
       }
-      img {
-        height: 2rem;
-        width: 2rem;
+    }
+    .edit {
+      left: 1rem;
+
+      background-image: url(../assets/edit.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      transition: transform 0.8s ease-in-out;
+
+      &:hover {
+        transform: rotate(-10deg);
       }
     }
   }
@@ -205,15 +221,29 @@ export default class VerticalKnowledge extends Vue {
     align-items: center;
   }
 
-  .eye {
-    img {
-      height: 2rem;
-      width: 2rem;
-      transition: transform 0.8s ease-in-out;
-      &:hover {
-        transform: rotate(360deg);
-      }
+  .eye,
+  .eye-off {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 2rem;
+    width: 2rem;
+    transition: transform 0.8s ease-in-out;
+    &:hover {
+      transform: rotate(360deg);
     }
+  }
+  .eye {
+    background-image: url(../assets/eye.svg);
+  }
+  .eye-off {
+    background-image: url(../assets/eye-off.svg);
+  }
+
+  .eye,
+  .remove,
+  .eye-off,
+  .edit {
+    cursor: pointer;
   }
 }
 </style>
