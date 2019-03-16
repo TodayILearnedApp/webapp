@@ -24,9 +24,13 @@
       <swiper-slide>
         <div class="card">
           <div class="content">
-            <span v-html="description"/>
-            <div @click="hideContent" class="eye">
-              <img src="@/assets/eye-off.svg">
+            <div :style="{ flexGrow: 1}">
+              <span v-html="description"/>
+            </div>
+            <div :style="{ display: 'flex', justifyContent: 'flex-end' }">
+              <div @click="hideContent" class="eye">
+                <img src="@/assets/eye-off.svg">
+              </div>
             </div>
           </div>
         </div>
@@ -174,6 +178,8 @@ export default class VerticalKnowledge extends Vue {
   }
 
   .content {
+    display: flex;
+    flex-direction: column;
     padding: 16px;
 
     flex-grow: 1;

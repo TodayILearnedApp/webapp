@@ -14,7 +14,7 @@
         :options="{
           freeMode: true,
           slidesPerView: 4,
-          spaceBetween: 40,
+          spaceBetween: 30,
           pagination: {
             el: '.swiper-pagination',
             dynamicBullets: true,
@@ -23,7 +23,7 @@
           breakpoints: {
             1024: {
               slidesPerView: 3,
-              spaceBetween: 40
+              spaceBetween: 30
             },
             768: {
               slidesPerView: 2,
