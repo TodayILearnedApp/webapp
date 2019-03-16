@@ -8,7 +8,10 @@
               <div class="edit"/>
             </router-link>
             <div @click="remove" class="remove"/>
-            <img :src="`https://api.adorable.io/avatars/285/${title}.png`">
+            <div
+              class="image"
+              :style="{backgroundImage: imageURL ?  `url(${imageURL})` : `url(https://api.adorable.io/avatars/285/${id}.png)`}"
+            />
           </div>
           <div class="separator"/>
           <div class="content">
@@ -89,6 +92,7 @@ export default class VerticalKnowledge extends Vue {
   @Prop() private title!: string;
   @Prop() private description!: string;
   @Prop() private illustration!: string;
+  @Prop() private imageURL!: string;
 }
 </script>
 
@@ -149,10 +153,14 @@ export default class VerticalKnowledge extends Vue {
 
     width: 100%;
 
-    img {
+    .image {
       border-radius: 50%;
-      width: 128px;
       height: 128px;
+      width: 128px;
+
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
 
     .edit,

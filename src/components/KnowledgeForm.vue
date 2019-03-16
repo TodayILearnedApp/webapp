@@ -27,6 +27,14 @@
       placeholder="Date"
       format="yyyy-MM-dd"
     />
+
+    <input
+      v-model="form.imageURL"
+      class="input"
+      type="text"
+      placeholder="An illustration for this ? paste an URL"
+      v-focus
+    >
     <label class="label" for="date">Let's put some tags to help us find that later</label>
     <VueTagsInput
       placeholder="What about 'word' or 'it' or 'general' ?"
@@ -64,19 +72,21 @@ import { config } from "../domains/knowledges/config";
         title: get(this.knowledgeData, "title", ""),
         description: get(this.knowledgeData, "description", ""),
         date: get(this.knowledgeData, "date", new Date()),
-        tags: get(this.knowledgeData, "tags", [])
+        tags: get(this.knowledgeData, "tags", []),
+        imageURL: get(this.knowledgeData, "imageURL", "")
       }
     };
   },
   methods: {
     editKnowledge: async function() {
-      const { title, description, date, tags } = this.$data.form;
+      const { title, description, date, tags, imageURL } = this.$data.form;
 
       const newDoc = {
         title,
         description,
         date: moment(date).format("YYYY-MM-DD"),
-        tags: tags.map(i => i.text)
+        tags: tags.map(i => i.text),
+        imageURL
       };
 
       await this.save(newDoc);
@@ -84,7 +94,7 @@ import { config } from "../domains/knowledges/config";
       this.$router.push({ name: "user" });
     },
     addKnowledge: async function() {
-      const { title, description, date, tags } = this.$data.form;
+      const { title, description, date, tags, imageURL } = this.$data.form;
 
       const currentUser = firebase.auth().currentUser;
       const uid = currentUser.uid;
@@ -98,14 +108,16 @@ import { config } from "../domains/knowledges/config";
         description,
         date: moment(date).format("YYYY-MM-DD"),
         author: currentUser.uid,
-        tags: tags.map(i => i.text)
+        tags: tags.map(i => i.text),
+        imageURL
       });
 
       this.$data.form = {
         title: "",
         description: "",
         date: new Date(),
-        tags: []
+        tags: [],
+        imageURL: ""
       };
 
       this.$router.push({ name: "user" });

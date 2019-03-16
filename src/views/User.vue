@@ -46,6 +46,7 @@
             :date="item.date"
             :title="item.title"
             :description="item.description"
+            :imageURL="item.imageURL"
           />
         </swiper-slide>
         <div class="pagination swiper-pagination" slot="pagination"></div>
