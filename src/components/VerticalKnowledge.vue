@@ -3,7 +3,7 @@
     <swiper ref="mySwiper" :options="swiperOption">
       <swiper-slide>
         <div class="card">
-          <div class="illustration">
+          <div class="illustration" :style="{ backgroundImage: gradient(title) }">
             <router-link :to="`/edit/${id}`">
               <div class="edit"/>
             </router-link>
@@ -14,18 +14,18 @@
             />
           </div>
           <div class="separator"/>
-          <div class="content">
+          <div class="content" :style="{ backgroundColor: contentBackground(title) }">
             <div class="title">{{title}}</div>
-          </div>
-          <div class="date">
-            <div>{{date | dateDisplay}}</div>
-            <div @click="displayContent" class="eye"/>
+            <div class="date">
+              <div>{{date | dateDisplay}}</div>
+              <div @click="displayContent" class="eye"/>
+            </div>
           </div>
         </div>
       </swiper-slide>
       <swiper-slide>
         <div class="card">
-          <div class="content">
+          <div class="content" :style="{ backgroundColor: contentBackground(title) }">
             <div :style="{ flexGrow: 1}">
               <span v-html="description"/>
             </div>
@@ -45,6 +45,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { config } from "../domains/knowledges/config";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import moment from "moment";
+import colors from "@/utils/colors";
 
 @Component({
   components: {
@@ -64,6 +65,8 @@ import moment from "moment";
     };
   },
   methods: {
+    gradient: s => colors.gradientFromString(s),
+    contentBackground: s => colors.fromString800(s),
     remove: async function() {
       const userIsSure = window.confirm("Are you sure ?");
 
@@ -97,53 +100,51 @@ export default class VerticalKnowledge extends Vue {
 </script>
 
 <style scoped lang="scss">
+.swiper-container {
+  max-height: 256px;
+}
 .container {
   position: relative;
   background-color: #fff;
 
-  margin: 50px 4px;
+  margin: 8px 4px;
 
-  box-shadow: 0 1px #ffffff inset, 0 1px 3px rgba(34, 25, 25, 0.4);
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
+
   transition: all 0.3s ease-in-out;
 
-  border-radius: 5px;
+  border-radius: 8px;
 
   overflow: hidden;
 
   &:hover {
     box-shadow: 0 1px #ffffff inset, 0 3px 5px rgba(34, 25, 25, 0.4);
-    background-color: #b8c6db;
-    background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
     .edit,
     .remove {
       display: inherit !important;
     }
   }
 
-  width: 256px;
-  min-width: 256px;
-  height: 400px;
+  width: calc(33% - 12px);
+  height: 256px;
 
   .card {
     display: flex;
     flex-direction: column;
 
-    width: 256px;
-    height: 400px;
+    width: 100%;
+    height: 256px;
   }
 
   .separator {
-    border-radius: 4px;
-    border: 1px solid lightgrey;
-    margin: 0 16px;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
   }
 
   .illustration {
     position: relative;
 
-    border-radius: 5px;
-
-    flex: 5;
+    flex: 16;
 
     display: flex;
 
@@ -204,7 +205,10 @@ export default class VerticalKnowledge extends Vue {
   .content {
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    justify-content: space-between;
+    padding: 16px 20px 20px;
+
+    color: rgba(255, 255, 255, 0.8);
 
     flex-grow: 1;
 
@@ -219,8 +223,6 @@ export default class VerticalKnowledge extends Vue {
 
   .date {
     flex: 1;
-
-    margin: 0 16px;
 
     display: flex;
     flex-direction: row;

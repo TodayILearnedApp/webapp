@@ -10,47 +10,15 @@
 
     <h2>Latest knowledges</h2>
     <div class="vertical-knowledges-container">
-      <swiper
-        :options="{
-          freeMode: true,
-          slidesPerView: 4,
-          spaceBetween: 30,
-          pagination: {
-            el: '.swiper-pagination',
-            dynamicBullets: true,
-            clickable: true,
-          },
-          breakpoints: {
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 30
-            },
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 20
-            },
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 10
-            }
-          }
-        }"
-      >
-        <swiper-slide :key="item.id" v-for="item in latestKnowledges">
-          <VerticalKnowledge
-            :id="item.id"
-            :date="item.date"
-            :title="item.title"
-            :description="item.description"
-            :imageURL="item.imageURL"
-          />
-        </swiper-slide>
-        <div class="pagination swiper-pagination" slot="pagination"></div>
-      </swiper>
+      <VerticalKnowledge
+        :key="item.id"
+        v-for="item in latestKnowledges"
+        :id="item.id"
+        :date="item.date"
+        :title="item.title"
+        :description="item.description"
+        :imageURL="item.imageURL"
+      />
     </div>
 
     <h2>All knowledges</h2>
@@ -161,12 +129,10 @@ export default class User extends Vue {}
 <style scoped lang="scss">
 .vertical-knowledges-container {
   width: 100%;
+
   display: flex;
   flex-direction: row;
-
-  .pagination {
-    margin-top: 2rem;
-  }
+  flex-wrap: wrap;
 }
 
 .form-container {
