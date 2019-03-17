@@ -29,7 +29,7 @@
         </div>
         <div class="date">{{ item.date | humanDate}}</div>
         <div class="content">
-          <div class="title">{{item.title}}</div>
+          <KnowledgeSmall :title="item.title" :date="item.date"/>
           <div v-if="Array.isArray(item.tags)" class="tags">
             <div :key="tag" class="tag" v-for="tag in item.tags">#{{tag}}</div>
           </div>
@@ -50,9 +50,11 @@ import { Knowledge } from "../domains/knowledges/model";
 import { config } from "../domains/knowledges/config";
 import KnowledgeForm from "@/components/KnowledgeForm";
 import VerticalKnowledge from "@/components/VerticalKnowledge";
+import KnowledgeSmall from "@/components/KnowledgeSmall";
 
 @Component({
   components: {
+    KnowledgeSmall,
     VerticalKnowledge,
     KnowledgeForm,
     swiper,
@@ -167,7 +169,7 @@ export default class User extends Vue {}
 
   .knowledge {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     margin-top: 2em;
 
     .marker-container {
