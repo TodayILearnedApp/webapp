@@ -19,12 +19,6 @@ import HorizontalNav from "@/components/HorizontalNav";
 @Component({
   components: {
     HorizontalNav
-  },
-  methods: {
-    logout: function() {
-      firebase.auth().signOut();
-      this.$router.replace("home");
-    }
   }
 })
 export default class App extends Vue {}
@@ -37,6 +31,13 @@ export default class App extends Vue {}
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background-color: #ffffff;
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    color: #2c3e50;
+  }
 }
 
 body {
