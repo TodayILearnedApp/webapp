@@ -20,6 +20,12 @@
           <div>{{displayName}}</div>
         </div>
       </router-link>
+      <router-link to="/settings">
+        <div v-if="connected" class="link">
+          <div class="icon settings-illustration"/>
+          <div>Settings</div>
+        </div>
+      </router-link>
       <div v-if="connected" class="link" @click="logout">
         <div class="icon logout-illustration"/>
         <div>Logout</div>
@@ -73,6 +79,11 @@ export default class VerticalKnowledge extends Vue {}
   font-family: "Roboto Slab", serif;
   font-weight: bold;
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .logo {
     display: flex;
     align-content: center;
@@ -88,10 +99,6 @@ export default class VerticalKnowledge extends Vue {}
 
   .link {
     margin: 16px 16px;
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
     padding: 8px;
     cursor: pointer;
 
@@ -147,6 +154,9 @@ export default class VerticalKnowledge extends Vue {}
 }
 .logout-illustration {
   background-image: url(../assets/logout.svg);
+}
+.settings-illustration {
+  background-image: url(../assets/settings.svg);
 }
 .home-illustration {
   background-image: url(../assets/home.svg);

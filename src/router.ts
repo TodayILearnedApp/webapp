@@ -6,6 +6,7 @@ import Home from "./views/Home.vue";
 import User from "./views/User.vue";
 import Form from "./views/Form.vue";
 import Edit from "./views/Edit.vue";
+import Settings from "./views/Settings.vue";
 
 Vue.use(Router);
 
@@ -31,6 +32,14 @@ const router = new Router({
       path: "/user",
       name: "user",
       component: User,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: Settings,
       meta: {
         requiresAuth: true
       }
