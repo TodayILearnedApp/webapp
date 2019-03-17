@@ -57,12 +57,11 @@
     <div class="timeline">
       <div class="knowledge" :key="item.key" v-for="item in knowledges">
         <div class="marker-container">
-          <div class="marker"/>
+          <div class="marker" :style="{ borderColor: timelineBorderColor(item.title) }"/>
         </div>
         <div class="date">{{ item.date | humanDate}}</div>
         <div class="content">
           <div class="title">{{item.title}}</div>
-          <div class="description" v-html="item.description"/>
           <div v-if="Array.isArray(item.tags)" class="tags">
             <div :key="tag" class="tag" v-for="tag in item.tags">#{{tag}}</div>
           </div>
@@ -78,6 +77,7 @@ import moment from "moment";
 import { Component, Vue } from "vue-property-decorator";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
+import colors from "@/utils/colors";
 import { Knowledge } from "../domains/knowledges/model";
 import { config } from "../domains/knowledges/config";
 import KnowledgeForm from "@/components/KnowledgeForm";
@@ -103,6 +103,7 @@ import VerticalKnowledge from "@/components/VerticalKnowledge";
     this.getKnowledges();
   },
   methods: {
+    timelineBorderColor: title => colors.fromString(title),
     navigateToForm() {},
     async getKnowledges() {
       const currentUser = firebase.auth().currentUser;
@@ -233,24 +234,22 @@ export default class User extends Vue {}
       .title {
         font-size: 0.9em;
       }
-      .description {
-        font-size: 0.7em;
+      .tags {
+        font-size: 0.7rem;
         color: #808080;
-      }
-    }
-    .tags {
-      margin-top: 8px;
-      display: flex;
-      flex-direction: row;
-      .tag:not(:first-child) {
-        margin-left: 1rem;
-      }
+        margin-top: 8px;
+        display: flex;
+        flex-direction: row;
+        .tag:not(:first-child) {
+          margin-left: 1rem;
+        }
 
-      .tag {
-        &:hover {
-          color: #3d5afe;
-          cursor: pointer;
-          font-weight: bold;
+        .tag {
+          &:hover {
+            color: #3d5afe;
+            cursor: pointer;
+            font-weight: bold;
+          }
         }
       }
     }
