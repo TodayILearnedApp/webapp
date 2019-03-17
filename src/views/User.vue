@@ -25,7 +25,7 @@
     <div class="timeline">
       <div class="knowledge" :key="item.key" v-for="item in knowledges">
         <div class="marker-container">
-          <div class="marker" :style="{ borderColor: timelineBorderColor(item.title) }"/>
+          <div class="marker" :style="{ backgroundImage: gradient(item.title) }"/>
         </div>
         <div class="date">{{ item.date | humanDate}}</div>
         <div class="content">
@@ -73,6 +73,7 @@ import KnowledgeSmall from "@/components/KnowledgeSmall";
     this.getKnowledges();
   },
   methods: {
+    gradient: s => colors.gradientFromString(s),
     timelineBorderColor: title => colors.fromString(title),
     navigateToForm() {},
     async getKnowledges() {
@@ -186,7 +187,6 @@ export default class User extends Vue {}
       min-width: 24px;
 
       // border
-      border: 2px solid #ff1744;
       border-radius: 50%;
 
       background-color: white;
