@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <KnowledgeForm/>
+    <KnowledgeForm mode="create"/>
   </div>
 </template>
 
@@ -9,8 +9,8 @@ import firebase from "firebase";
 import moment from "moment";
 import { Component, Vue } from "vue-property-decorator";
 
-import { Knowledge } from "../domains/knowledges/model";
-import { config } from "../domains/knowledges/config";
+import { Knowledge } from "@/domains/knowledges/model";
+import { config } from "@/domains/knowledges/config";
 import KnowledgeForm from "@/components/KnowledgeForm";
 
 @Component({

@@ -3,9 +3,9 @@
     <div class="card">
       <div class="content" :style="{ backgroundColor: contentBackground(title) }">
         <div :style="{ flexGrow: 1}">{{title}}</div>
-        <div :style="{ display: 'flex', justifyContent: 'flex-end' }">
-          <div @click="hideContent" class="eye"/>
-        </div>
+        <!--<div :style="{ display: 'flex', justifyContent: 'flex-end' }">-->
+        <!--  <div @click="hideContent" class="eye"/>-->
+        <!--</div>-->
       </div>
     </div>
   </div>
@@ -13,29 +13,13 @@
 
 <script lang="ts">
 import firebase from "firebase";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { config } from "../domains/knowledges/config";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import moment from "moment";
 import colors from "@/utils/colors";
 
 @Component({
-  components: {
-    swiper,
-    swiperSlide
-  },
-  computed: {
-    swiper() {
-      return this.$refs.mySwiper.swiper;
-    }
-  },
-  data() {
-    return {
-      swiperOption: {
-        direction: "vertical"
-      }
-    };
-  },
+  components: {},
   methods: {
     gradient: s => colors.gradientFromString(s),
     contentBackground: s => colors.fromString800(s),
@@ -49,25 +33,12 @@ import colors from "@/utils/colors";
         .collection(config.collection_endpoint)
         .doc(this.id)
         .delete();
-    },
-    displayContent: function() {
-      this.swiper.slideTo(1, 500, false);
-    },
-    hideContent: function() {
-      this.swiper.slideTo(0, 1000, false);
     }
-  },
-  filters: {
-    dateDisplay: date => moment(date).format("YYYY-MM-DD")
   }
 })
 export default class KnowledgeSmall extends Vue {
-  @Prop() private id!: string;
   @Prop() private date!: string;
   @Prop() private title!: string;
-  @Prop() private description!: string;
-  @Prop() private illustration!: string;
-  @Prop() private imageURL!: string;
 }
 </script>
 
